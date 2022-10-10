@@ -96,7 +96,6 @@ services:
       - ${CHARON_PORT_P2P_TCP:-3610}:3611/tcp       # P2P TCP libp2p
       - ${CHARON_PORT_MONITORING:-3621}:3620/tcp    # Monitoring
       - ${CHARON_PORT_P2P_UDP:-3631}:3630/udp       # P2P UDP discv5
-    networks: [dvnode]
     volumes:
       - .charon:/opt/charon/.charon
     restart: on-failure
@@ -116,7 +115,6 @@ services:
     command: |
       validator-client
       --config-file "/opt/charon/teku/teku_config.yaml"
-    networks: [dvnode]
     volumes:
       - ".charon/validator_keys:/opt/charon/validator_keys"
       - "./config:/opt/charon/teku"
@@ -134,7 +132,6 @@ services:
     user: ":"
     ports:
       - ${MONITORING_PORT_PROMETHEUS:-9091}:9090
-    networks: [dvnode]
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./data/prometheus:/prometheus
@@ -144,7 +141,6 @@ services:
     user: ":"
     ports:
       - ${MONITORING_PORT_GRAFANA:-3001}:3000
-    networks: [dvnode]
     volumes:
       - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
       - ./grafana/dashboards.yml:/etc/grafana/provisioning/dashboards/datasource.yml
@@ -154,13 +150,11 @@ services:
 
   node-exporter:
     image: prom/node-exporter:latest
-    networks: [dvnode]
 
   jaeger:
     image: jaegertracing/all-in-one:latest
     ports:
       - ${MONITORING_PORT_JAEGER:-16686}:16686
-    networks: [dvnode]
 
 # networks:
 #   dvnode:
