@@ -2,12 +2,6 @@ version: "3.8"
 
 # Override any defaults specified by `${FOO:-bar}` in `.env` with `FOO=qux`.
 
-x-logging: &logging
-  logging:
-    driver: loki
-    options:
-      loki-url: http://localhost:${MONITORING_PORT_LOKI:-3100}/loki/api/v1/push
-
 services:
   #             _   _
   #   __ _  ___| |_| |__
@@ -16,66 +10,66 @@ services:
   #  \__, |\___|\__|_| |_|
   #  |___/
 
-  geth:
-    image: ethereum/client-go:${GETH_VERSION:-v1.10.25}
-    ports:
-      - ${GETH_PORT_P2P:-30303}:30303/tcp # P2P TCP
-      - ${GETH_PORT_P2P:-30303}:30303/udp # P2P UDP
-      - ${GETH_PORT_HTTP:-8545}:8545      # JSON-RPC
-      - ${GETH_PORT_AUTH:-8551}:8551      # AUTH-RPC
-      - ${GETH_PORT_METRICS:-6060}:6060   # Metrics
-    command: |
-      --goerli
-      --http
-      --http.addr=0.0.0.0
-      --http.port=8545
-      --http.vhosts="*"
-      --http.api="db,eth,net,engine,rpc,web3"
-      --authrpc.jwtsecret="/root/jwt/jwt.hex"
-      --authrpc.addr=0.0.0.0
-      --authrpc.port=8551
-      --authrpc.vhosts="*"
-      --metrics
-      --metrics.addr=0.0.0.0
-      --metrics.port=6060
-    networks: [dvnode]
-    volumes:
-      - ./data/geth:/root/.ethereum
-      - ./jwt:/root/jwt
-    restart: on-failure
+  # geth:
+  #   image: ethereum/client-go:${GETH_VERSION:-v1.10.23}
+  #   ports:
+  #     - ${GETH_PORT_P2P:-30303}:30303/tcp # P2P TCP
+  #     - ${GETH_PORT_P2P:-30303}:30303/udp # P2P UDP
+  #     - ${GETH_PORT_HTTP:-8545}:8545      # JSON-RPC
+  #     - ${GETH_PORT_AUTH:-8551}:8551      # AUTH-RPC
+  #     - ${GETH_PORT_METRICS:-6060}:6060   # Metrics
+  #   command: |
+  #     --goerli
+  #     --http
+  #     --http.addr=0.0.0.0
+  #     --http.port=8545
+  #     --http.vhosts="*"
+  #     --http.api="db,eth,net,engine,rpc,web3"
+  #     --authrpc.jwtsecret="/root/jwt/jwt.hex"
+  #     --authrpc.addr=0.0.0.0
+  #     --authrpc.port=8551
+  #     --authrpc.vhosts="*"
+  #     --metrics
+  #     --metrics.addr=0.0.0.0
+  #     --metrics.port=6060
+  #   networks: [dvnode]
+  #   volumes:
+  #     - ./data/geth:/root/.ethereum
+  #     - ./jwt:/root/jwt
+  #   restart: on-failure
 
-  #  _ _       _     _   _
-  # | (_) __ _| |__ | |_| |__   ___  _   _ ___  ___
-  # | | |/ _` | '_ \| __| '_ \ / _ \| | | / __|/ _ \
-  # | | | (_| | | | | |_| | | | (_) | |_| \__ \  __/
-  # |_|_|\__, |_| |_|\__|_| |_|\___/ \__,_|___/\___|
-  #      |___/
+  # #  _ _       _     _   _
+  # # | (_) __ _| |__ | |_| |__   ___  _   _ ___  ___
+  # # | | |/ _` | '_ \| __| '_ \ / _ \| | | / __|/ _ \
+  # # | | | (_| | | | | |_| | | | (_) | |_| \__ \  __/
+  # # |_|_|\__, |_| |_|\__|_| |_|\___/ \__,_|___/\___|
+  # #      |___/
 
-  lighthouse:
-    image: sigp/lighthouse:${LIGHTHOUSE_VERSION:-v3.1.2}
-    ports:
-      - ${LIGHTHOUSE_PORT_P2P:-9000}:9000/tcp   # P2P TCP
-      - ${LIGHTHOUSE_PORT_P2P:-9000}:9000/udp   # P2P UDP
-      - ${LIGHTHOUSE_PORT_METRICS:-5052}:5052   # Metrics
-    command: |
-      lighthouse bn
-      --network=goerli
-      --checkpoint-sync-url=https://goerli.checkpoint-sync.ethdevops.io
-      --execution-endpoint=http://geth:8551
-      --execution-jwt=/opt/jwt/jwt.hex
-      --datadir=/opt/app/beacon/
-      --http
-      --http-address=0.0.0.0
-      --http-port=5052
-      --metrics
-      --metrics-address=0.0.0.0
-      --metrics-port=5054
-      --metrics-allow-origin="*"
-    networks: [dvnode]
-    volumes:
-      - ./data/lighthouse:/opt/app/beacon
-      - ./jwt:/opt/jwt
-    restart: on-failure
+  # lighthouse:
+  #   image: sigp/lighthouse:${LIGHTHOUSE_VERSION:-v3.1.0}
+  #   ports:
+  #     - ${LIGHTHOUSE_PORT_P2P:-9000}:9000/tcp   # P2P TCP
+  #     - ${LIGHTHOUSE_PORT_P2P:-9000}:9000/udp   # P2P UDP
+  #     - ${LIGHTHOUSE_PORT_METRICS:-5052}:5052   # Metrics
+  #   command: |
+  #     lighthouse bn
+  #     --network=goerli
+  #     --checkpoint-sync-url=https://goerli.checkpoint-sync.ethdevops.io
+  #     --execution-endpoint=http://geth:8551
+  #     --execution-jwt=/opt/jwt/jwt.hex
+  #     --datadir=/opt/app/beacon/
+  #     --http
+  #     --http-address=0.0.0.0
+  #     --http-port=5052
+  #     --metrics
+  #     --metrics-address=0.0.0.0
+  #     --metrics-port=5054
+  #     --metrics-allow-origin="*"
+  #   networks: [dvnode]
+  #   volumes:
+  #     - ./data/lighthouse:/opt/app/beacon
+  #     - ./jwt:/opt/jwt
+  #   restart: on-failure
 
   #       _
   #   ___| |__   __ _ _ __ ___  _ __
@@ -84,12 +78,10 @@ services:
   #  \___|_| |_|\__,_|_|  \___/|_| |_|
 
   charon:
-    <<: *logging
-    image: obolnetwork/charon:${CHARON_VERSION:-v0.11.0}
+    image: obolnetwork/charon:${CHARON_VERSION:-v0.10.1}
     environment:
       - CHARON_BEACON_NODE_ENDPOINTS=${CHARON_BEACON_NODE_ENDPOINTS:-http://lighthouse:5052}
       - CHARON_LOG_LEVEL=${CHARON_LOG_LEVEL:-info}
-      - CHARON_LOG_FORMAT=${CHARON_LOG_FORMAT:-logfmt}
       - CHARON_P2P_BOOTNODES=${CHARON_P2P_BOOTNODES:-http://bootnode.lb.gcp.obol.tech:3640/enr}
       - CHARON_P2P_BOOTNODE_RELAY=${CHARON_P2P_BOOTNODE_RELAY:-true}
       - CHARON_P2P_EXTERNAL_HOSTNAME=${CHARON_P2P_EXTERNAL_HOSTNAME:-} # Empty default required to avoid warnings.
@@ -100,10 +92,10 @@ services:
       - CHARON_JAEGER_ADDRESS=${CHARON_JAEGER_ADDRESS-jaeger:6831} # Overriding to empty address allowed
       - CHARON_JAEGER_SERVICE=charon
     ports:
-      - ${CHARON_PORT_VALIDATOR_API:-3600}:3600/tcp # Validator API
-      - ${CHARON_PORT_P2P_TCP:-3610}:3610/tcp       # P2P TCP libp2p
-      - ${CHARON_PORT_MONITORING:-3620}:3620/tcp    # Monitoring
-      - ${CHARON_PORT_P2P_UDP:-3630}:3630/udp       # P2P UDP discv5
+      - ${CHARON_PORT_VALIDATOR_API:-3601}:3600/tcp # Validator API
+      - ${CHARON_PORT_P2P_TCP:-3610}:3611/tcp       # P2P TCP libp2p
+      - ${CHARON_PORT_MONITORING:-3621}:3620/tcp    # Monitoring
+      - ${CHARON_PORT_P2P_UDP:-3631}:3630/udp       # P2P UDP discv5
     networks: [dvnode]
     volumes:
       - .charon:/opt/charon/.charon
@@ -118,16 +110,16 @@ services:
   #  \__\___|_|\_\\__,_|
 
   teku:
-    image: consensys/teku:${TEKU_VERSION:-22.10}
+    image: consensys/teku:${TEKU_VERSION:-22.9.1}
     ports:
-      - ${TEKU_PORT_METRICS:-8008}:8008 # Metrics
+      - ${TEKU_PORT_METRICS:-8009}:8008 # Metrics
     command: |
       validator-client
-      --config-file "/opt/teku/teku_config.yaml"
+      --config-file "/opt/charon/teku/teku_config.yaml"
     networks: [dvnode]
     volumes:
-      - .charon/validator_keys:/opt/charon/validator_keys
-      - ./teku/teku_config.yaml:/opt/teku/teku_config.yaml
+      - ".charon/validator_keys:/opt/charon/validator_keys"
+      - "./config:/opt/charon/teku"
     restart: on-failure
 
   #                        _ _             _
@@ -138,21 +130,20 @@ services:
   #                                                |___/
 
   prometheus:
-    image: prom/prometheus:v2.39.1
+    image: prom/prometheus:v2.38.0
     user: ":"
     ports:
-      - ${MONITORING_PORT_PROMETHEUS:-9090}:9090
+      - ${MONITORING_PORT_PROMETHEUS:-9091}:9090
     networks: [dvnode]
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./data/prometheus:/prometheus
-    restart: on-failure
 
   grafana:
-    image: grafana/grafana:9.2.1
+    image: grafana/grafana:9.0.7
     user: ":"
     ports:
-      - ${MONITORING_PORT_GRAFANA:-3000}:3000
+      - ${MONITORING_PORT_GRAFANA:-3001}:3000
     networks: [dvnode]
     volumes:
       - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
@@ -160,37 +151,20 @@ services:
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
       - ./grafana/dashboards:/etc/dashboards
       - ./data/grafana:/var/lib/grafana
-    restart: on-failure
-
-  loki:
-    image: grafana/loki:2.6.1
-    user: ":"
-    ports:
-      - ${MONITORING_PORT_LOKI:-3100}:3100
-    networks: [dvnode]
-    command: -config.file=/etc/loki/loki.yml
-    volumes:
-      - ./loki/loki.yml:/etc/loki/loki.yml
-      - ./data/loki:/opt/loki
-    restart: on-failure
 
   node-exporter:
-    image: bitnami/node-exporter:1.4.0
+    image: prom/node-exporter:latest
     networks: [dvnode]
 
   jaeger:
-    image: jaegertracing/all-in-one:1.38.1
+    image: jaegertracing/all-in-one:latest
     ports:
       - ${MONITORING_PORT_JAEGER:-16686}:16686
-    environment:
-      - SPAN_STORAGE_TYPE=badger
-      - BADGER_EPHEMERAL=false
-      - BADGER_DIRECTORY_VALUE=/badger/data
-      - BADGER_DIRECTORY_KEY=/badger/key
-      - BADGER_SPAN_STORE_TTL=72h
-    volumes:
-      - ./data/jaeger:/badger
     networks: [dvnode]
 
+# networks:
+#   dvnode:
 networks:
-  dvnode:
+  default:
+    name: ${EXIT_DOCKER_NETWORK:-charon-distributed-validator-node_dvnode}
+    external: true
