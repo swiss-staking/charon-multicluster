@@ -93,7 +93,7 @@ services:
       - CHARON_JAEGER_SERVICE=charon
     ports:
       - ${CHARON_PORT_VALIDATOR_API:-3601}:3600/tcp # Validator API
-      - ${CHARON_PORT_P2P_TCP:-3610}:3611/tcp       # P2P TCP libp2p
+      - ${CHARON_PORT_P2P_TCP:-3611}:3610/tcp       # P2P TCP libp2p
       - ${CHARON_PORT_MONITORING:-3621}:3620/tcp    # Monitoring
       - ${CHARON_PORT_P2P_UDP:-3631}:3630/udp       # P2P UDP discv5
     volumes:
