@@ -17,10 +17,10 @@ scrape_configs:
       - targets: ["lighthouse:5054"]
   - job_name: "charon"
     static_configs:
-      - targets: ["charon:3620"]
+      - targets: ["charon_minimal:3620"]
   - job_name: "teku"
     static_configs:
-      - targets: ["teku:8008"]
+      - targets: ["teku_minimal:8008"]
   - job_name: "node-exporter"
     static_configs:
       - targets: ["node-exporter:9100"]
