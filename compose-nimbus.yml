@@ -19,6 +19,7 @@ services:
     image: statusim/nimbus-eth2:amd64-${NUMBUS_VERSION:-v22.10.0}
     restart: on-failure
     stop_grace_period: 1m
+    user: ":"
     ports:
       - ${NIMBUS_PORT_P2P:-9001}:9001/tcp   # P2P TCP
       - ${NIMBUS_PORT_P2P:-9001}:9001/udp   # P2P UDP
