@@ -4,6 +4,16 @@ version: "3.8"
 
 # Override any defaults specified by `${FOO:-bar}` in `.env` with `FOO=qux`.
 
+# Optional trusted checkpoint sync should be performed before starting this service
+#
+# docker run --rm -uroot \
+#  -v "$(pwd)/data/nimbus:/home/user/nimbus-eth2/build/data/shared_prater_0" \
+#  statusim/nimbus-eth2:amd64-v22.10.0 \
+#  trustedNodeSync \
+#  --network:prater \
+#  --data-dir=build/data/shared_prater_0  \
+#  --trusted-node-url=<use one of these https://eth-clients.github.io/checkpoint-sync-endpoints/#goerli>
+
 services:
   nimbus:
     image: statusim/nimbus-eth2:amd64-${NUMBUS_VERSION:-v22.10.0}
@@ -17,7 +27,6 @@ services:
       - ./data/nimbus:/home/user/nimbus-eth2/build/data
     # Ensure port 9001 is accessible from outside; no automagic port forwarding here
     command: |
-      ${NIMBUS_TRUSTED_SYNC:-}
       --network=prater
       --data-dir=/home/user/nimbus-eth2/build/data/shared_prater_0
       --web3-url=${NIMBUS_WEB3_URL:-http://geth:8551}
