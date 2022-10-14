@@ -156,7 +156,7 @@ services:
   jaeger:
     image: jaegertracing/all-in-one:latest
     ports:
-      - ${MONITORING_PORT_JAEGER:-16686}:16686
+      - ${MONITORING_PORT_JAEGER:-16687}:16686
 
 # networks:
 #   dvnode:
