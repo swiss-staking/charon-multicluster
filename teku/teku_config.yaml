@@ -1,4 +1,4 @@
-beacon-node-api-endpoint: "http://charon:3600"
+beacon-node-api-endpoint: "http://charon_minimal:3600"
 metrics-enabled: true
 metrics-host-allowlist: "*"
 metrics-interface: "0.0.0.0"
