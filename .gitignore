@@ -15,3 +15,7 @@ data/
 teku/validator/
 # Teku directory for storing logs
 teku/logs/
+
+# Swiss Staking overrides
+docker-compose-obol.yaml
+docker-compose-lido.yaml

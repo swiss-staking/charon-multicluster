@@ -14,25 +14,29 @@
 # WARNING: This is for power users only and requires a deep understanding of Docker Compose
 # and how the local docker-compose.yml is configured.
 
-#services:
-  #geth:
+services:
+  geth:
     # Disable geth
-    #profiles: [disable]
+    profiles: [disable]
     # Bind geth internal ports to host ports
     #ports:
       #- 8545:8545 # JSON-RPC
       #- 8551:8551 # AUTH-RPC
       #- 6060:6060 # Metrics
 
-  #lighthouse:
+  lighthouse:
     # Disable lighthouse
-    #profiles: [disable]
+    profiles: [disable]
     # Bind lighthouse internal ports to host ports
     #ports:
       #- 5052:5052 # HTTP
       #- 5054:5054 # Metrics
 
-  #charon:
+  charon:
+    networks:
+      dvnode:
+        aliases:
+          - charon-lido
     # Configure any additional env var flags in .env.charon.more
     #env_file: [.env.charon.more]
     # Bind charon internal ports to host ports
@@ -40,21 +44,36 @@
       #- 3600:3600/tcp # Validator API
       #- 3620:3620/tcp # Monitoring
 
-  #teku:
+  teku:
+    networks:
+      dvnode:
+        aliases:
+          - teku-lido
     # Disable teku
     #profiles: [disable]
     # Bind teku internal ports to host ports
     #ports:
       #- 8008:8008 # Metrics
 
-  #prometheus:
+  prometheus:
+    volumes:
+      - ./prometheus/prometheus-obol.yml:/etc/prometheus/prometheus.yml
     # Disable prometheus
     #profiles: [disable]
     # Bind prometheus internal ports to host ports
     #ports:
       #- 9090:9090 # Metrics
 
+  grafana:
+    # Disable grafana
+    profiles: [disable]
+
   #mev-boost:
     # Bind mev-boost internal ports to host ports
     #ports:
       #- 18550:18550 # Metrics
+
+networks:
+  dvnode:
+    name: ${CHARON_DOCKER_NETWORK:-charon-distributed-validator-node_dvnode}
+    external: true
