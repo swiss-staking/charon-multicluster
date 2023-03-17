@@ -35,6 +35,8 @@ services:
       dvnode:
         aliases:
           - teku-obol
+    volumes:
+      - ./teku/teku_config.yaml:/opt/teku_config-obol.yaml
     # Disable teku
     #profiles: [disable]
     # Bind teku internal ports to host ports
