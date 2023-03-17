@@ -36,7 +36,7 @@ services:
         aliases:
           - teku-obol
     volumes:
-      - ./teku/teku_config.yaml:/opt/teku_config-obol.yaml
+      - ./teku/teku_config-obol.yaml:/opt/teku_config.yaml
     # Disable teku
     #profiles: [disable]
     # Bind teku internal ports to host ports
