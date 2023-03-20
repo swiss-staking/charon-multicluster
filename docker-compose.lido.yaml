@@ -40,9 +40,9 @@ services:
     # Configure any additional env var flags in .env.charon.more
     #env_file: [.env.charon.more]
     # Bind charon internal ports to host ports
-    #ports:
+    ports:
       #- 3600:3600/tcp # Validator API
-      #- 3620:3620/tcp # Monitoring
+      - 3621:3620/tcp # Monitoring
 
   teku:
     networks:
@@ -53,13 +53,13 @@ services:
     #profiles: [disable]
     # Bind teku internal ports to host ports
     #ports:
-      #- 8008:8008 # Metrics
+      - 8009:8008 # Metrics
 
   prometheus:
-    volumes:
-      - ./prometheus/prometheus-obol.yml:/etc/prometheus/prometheus.yml
+    #volumes:
+    #  - ./prometheus/prometheus-obol.yml:/etc/prometheus/prometheus.yml
     # Disable prometheus
-    #profiles: [disable]
+    profiles: [disable]
     # Bind prometheus internal ports to host ports
     #ports:
       #- 9090:9090 # Metrics
