@@ -37,6 +37,8 @@ services:
       dvnode:
         aliases:
           - charon-lido
+    environment:
+      - CHARON_PORT_P2P_TCP=3611
     # Configure any additional env var flags in .env.charon.more
     #env_file: [.env.charon.more]
     # Bind charon internal ports to host ports
