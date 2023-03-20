@@ -56,6 +56,8 @@ services:
     # Bind teku internal ports to host ports
     ports:
       - 8009:8008 # Metrics
+    volumes:
+      - ./teku/teku_config-lido.yaml:/opt/teku_config.yaml
 
   prometheus:
     #volumes:
@@ -75,7 +77,7 @@ services:
     #ports:
       #- 18550:18550 # Metrics
 
-networks:
-  dvnode:
-    name: ${CHARON_DOCKER_NETWORK:-charon-distributed-validator-node_dvnode}
-    external: true
+# networks:
+#   dvnode:
+#     name: ${CHARON_DOCKER_NETWORK:-charon-distributed-validator-node_dvnode}
+#     external: true
