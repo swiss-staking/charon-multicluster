@@ -26,9 +26,9 @@ services:
     # Configure any additional env var flags in .env.charon.more
     #env_file: [.env.charon.more]
     # Bind charon internal ports to host ports
-    #ports:
+    ports:
       #- 3600:3600/tcp # Validator API
-      #- 3620:3620/tcp # Monitoring
+      - 3620:3620/tcp # Monitoring
 
   teku:
     networks:
