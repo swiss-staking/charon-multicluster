@@ -40,8 +40,8 @@ services:
     # Disable teku
     #profiles: [disable]
     # Bind teku internal ports to host ports
-    #ports:
-      #- 8008:8008 # Metrics
+    ports:
+      - 8008:8008 # Metrics
 
   prometheus:
     volumes:
