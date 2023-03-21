@@ -5,7 +5,7 @@ global:
 remote_write:
   - url: https://vm.monitoring.gcp.obol.tech/write
     authorization:
-      credentials: obolhv=ksAph-=HeA28Kpx0OxeTArTWahDcm!us0/sAt1eo!a?gjaM=3btJ1I0dLn9IWIg26w6DM-V=JUGitR46/JZz3QMcWyqp1gNxTlNTUQ-639s2909RNFiSgxGnl
+      credentials: $PROM_REMOTE_WRITE_TOKEN
     write_relabel_configs:
       - source_labels: [job]
         regex: "charon"

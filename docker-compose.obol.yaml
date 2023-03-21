@@ -45,7 +45,7 @@ services:
 
   prometheus:
     environment:
-      - PROM_REMOTE_WRITE_TOKEN=obolhv=ksAph-=HeA28Kpx0OxeTArTWahDcm!us0/sAt1eo!a?gjaM=3btJ1I0dLn9IWIg26w6DM-V=JUGitR46/JZz3QMcWyqp1gNxTlNTUQ-639s2909RNFiSgxGnl
+      - PROM_REMOTE_WRITE_TOKEN=obolfwuuu0q5VujsiRq3Nsw5naQuZwQUqfSmSW3k9qXKzpvpG/31cSEau0fk5rMkF=EiKTBdDicbWBAJL6/ZdE!JOKGlqQ6h8iHFqv!Q835K8sWsPlOSOKUY7H4DVDEc
     volumes:
       - ./prometheus/prometheus-obol.yml:/etc/prometheus/prometheus.yml
     # Disable prometheus
