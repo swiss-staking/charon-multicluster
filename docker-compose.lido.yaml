@@ -63,10 +63,12 @@ services:
     #volumes:
     #  - ./prometheus/prometheus-obol.yml:/etc/prometheus/prometheus.yml
     # Disable prometheus
-    profiles: [disable]
+    #profiles: [disable]
     # Bind prometheus internal ports to host ports
     #ports:
       #- 9090:9090 # Metrics
+    volumes:
+      - ./prometheus/prometheus-lido.yml:/etc/prometheus/prometheus.yml
 
   grafana:
     # Disable grafana
