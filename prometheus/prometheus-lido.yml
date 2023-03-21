@@ -1,17 +1,21 @@
 global:
   scrape_interval: 30s # Set the scrape interval to every 30 seconds.
   evaluation_interval: 30s # Evaluate rules every 30 seconds.
+  external_labels:
+    cluster_name: $CLUSTER_NAME
 
 remote_write:
   - url: https://vm.monitoring.gcp.obol.tech/write
     authorization:
       credentials: $PROM_REMOTE_WRITE_TOKEN
-    write_relabel_configs:
-      - source_labels: [job]
-        regex: "charon"
-        action: keep # Keeps charon metrics and drop metrics from other containers.
-
+ 
 scrape_configs:
-  - job_name: "charon"
+  - job_name: 'charon'
     static_configs:
-      - targets: ["charon-lido:3620"]
+      - targets: ['lido-charon:3620']
+  - job_name: 'teku'
+    static_configs:
+      - targets: ['lido-teku:8008']
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
