@@ -1,20 +1,20 @@
 services:
   geth:
     # Disable geth
-    #profiles: [disable]
+    profiles: [disable]
     # Bind geth internal ports to host ports
-    ports:
-      - 8545:8545 # JSON-RPC
+    #ports:
+      #- 8545:8545 # JSON-RPC
       #- 8551:8551 # AUTH-RPC
-      - 6060:6060 # Metrics
+      #- 6060:6060 # Metrics
 
   lighthouse:
     # Disable lighthouse
-    #profiles: [disable]
+    profiles: [disable]
     # Bind lighthouse internal ports to host ports
-    ports:
-      - 5052:5052 # HTTP
-      - 5054:5054 # Metrics
+    #ports:
+      #- 5052:5052 # HTTP
+      #- 5054:5054 # Metrics
 
   charon:
     networks:
@@ -23,6 +23,7 @@ services:
           - charon-obol
     environment:
       - CHARON_NO_VERIFY=${CHARON_NO_VERIFY:-true}
+      - CHARON_BEACON_NODE_ENDPOINTS=https://lighthouse-testnet.swiss-staking.ch
     # Configure any additional env var flags in .env.charon.more
     #env_file: [.env.charon.more]
     # Bind charon internal ports to host ports
