@@ -61,7 +61,7 @@ services:
       - ./teku/teku_config-lido.yaml:/opt/teku_config.yaml
 
   prometheus:
-    environment:
+    #environment:
       #- PROM_REMOTE_WRITE_TOKEN=obolhv=ksAph-=HeA28Kpx0OxeTArTWahDcm!us0/sAt1eo!a?gjaM=3btJ1I0dLn9IWIg26w6DM-V=JUGitR46/JZz3QMcWyqp1gNxTlNTUQ-639s2909RNFiSgxGnl
     #volumes:
     #  - ./prometheus/prometheus-obol.yml:/etc/prometheus/prometheus.yml
