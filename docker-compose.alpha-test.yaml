@@ -31,24 +31,22 @@ services:
       #- 3600:3600/tcp # Validator API
       - 3620:3620/tcp # Monitoring
 
-  teku:
+  lodestar:
     networks:
       dvnode:
         aliases:
-          - teku-alpha
-    volumes:
-      - ./teku/teku_config-alpha.yaml:/opt/teku_config.yaml
-    # Disable teku
+          - lodestar-alpha
     #profiles: [disable]
     # Bind teku internal ports to host ports
     ports:
-      - 8006:8008 # Metrics
+      - 5062:5064 # Metrics
 
   prometheus:
-    environment:
-      - PROM_REMOTE_WRITE_TOKEN=obolfwuuu0q5VujsiRq3Nsw5naQuZwQUqfSmSW3k9qXKzpvpG/31cSEau0fk5rMkF=EiKTBdDicbWBAJL6/ZdE!JOKGlqQ6h8iHFqv!Q835K8sWsPlOSOKUY7H4DVDEc
-    volumes:
-      - ./prometheus/prometheus-alpha.yml:/etc/prometheus/prometheus.yml
+    profiles: [disable]
+    #environment:
+    #  - PROM_REMOTE_WRITE_TOKEN=obolfwuuu0q5VujsiRq3Nsw5naQuZwQUqfSmSW3k9qXKzpvpG/31cSEau0fk5rMkF=EiKTBdDicbWBAJL6/ZdE!JOKGlqQ6h8iHFqv!Q835K8sWsPlOSOKUY7H4DVDEc
+    #volumes:
+    # - ./prometheus/prometheus-alpha.yml:/etc/prometheus/prometheus.yml
     # Disable prometheus
     #profiles: [disable]
     # Bind prometheus internal ports to host ports
