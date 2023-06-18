@@ -53,9 +53,9 @@ services:
     #ports:
       #- 9090:9090 # Metrics
 
-  #grafana:
+  grafana:
     # Disable grafana
-    #profiles: [disable]
+    profiles: [disable]
 
   #mev-boost:
     # Disable mev-boost
