@@ -1,0 +1,38 @@
+services:
+  geth:
+    profiles: [disable]
+
+  lighthouse:
+    profiles: [disable]
+  
+  charon:
+    networks:
+      dvnode:
+        aliases:
+          - charon-alpha
+    environment:
+      - CHARON_BUILDER_API=true
+      - CHARON_BEACON_NODE_ENDPOINTS=https://lighthouse-mainnet.swiss-staking.ch
+    ports:
+      #- 3600:3600/tcp # Validator API
+      - 3620:3620/tcp # Monitoring
+
+  lodestar:
+    networks:
+      dvnode:
+        aliases:
+          - lodestar-alpha
+    ports:
+      - 5060:5064 # Metrics
+  
+  #no prom changes
+  #prometheus:
+    #profiles: [disable]
+    #ports:
+      #- 9090:9090 # Metrics
+
+  grafana:
+    profiles: [disable]
+
+  mev-boost:
+    profiles: [disable]

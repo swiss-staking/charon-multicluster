@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 30s # Set the scrape interval to every 30 seconds.
+  evaluation_interval: 30s # Evaluate rules every 30 seconds.
+
+remote_write:
+  - url: https://vm.monitoring.gcp.obol.tech/write
+    authorization:
+      credentials: obolhkUThNFAL!OH/PDr0HssAN8?!j0vyMqGM0oGVTU/H7=!Eir6?VeASeUH!37NWVhqPjiitaib2f5W5sCC=5tf=Qn777MSMTi1EK4wqvjeiHhkzVzJ5N9sHyzRf7!x
+ 
+scrape_configs:
+  - job_name: 'charon'
+    static_configs:
+      - targets: ['charon-alpha:3620']
+  - job_name: "lodestar"
+    static_configs:
+      - targets: [ "lodestar-alpha:5062" ]
